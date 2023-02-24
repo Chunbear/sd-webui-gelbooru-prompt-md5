@@ -3,7 +3,7 @@ You can use image links in the following formats：
 
 > https://img3.gelbooru.com//samples/8f/d8/sample_8fd81ff8b57f9acd8fb8cf8785c1aa8f.jpg
 > https://img3.gelbooru.com/images/8f/d8/8fd81ff8b57f9acd8fb8cf8785c1aa8f.jpg
-OR You can also directly input the md5 of the image
+> OR You can also directly input the md5 of the image
 > 8fd81ff8b57f9acd8fb8cf8785c1aa8f
 
 # 我更改了一些代码，可以直接输入图片的MD5就能获取图片tag，感谢原作者的代码。 #
