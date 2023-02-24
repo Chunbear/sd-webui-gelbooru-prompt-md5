@@ -14,14 +14,9 @@ from bs4 import BeautifulSoup
 def on_ui_settings():
 	section = ('gelbooru-prompt', "Gelbooru Prompt")
 
-def fetch(image):
-	#update hash based on image
-	#name = image.name
-	name = image.orig_name
-	print("name: " + name)
-	hash = name.split(".")[0]
-	if hash.startswith("sample_"):
-		hash = hash.replace("sample_", "")
+def fetch(picurl):
+	print("Ori: " + picurl)
+	hash = re.findall(r"([a-fA-F\d]{32})", picurl)[0]
 	print("hash: " + hash)
 
 	url = "https://gelbooru.com/index.php?page=post&s=list&tags=md5%3a" + hash
@@ -70,12 +65,11 @@ class BooruPromptsScript(scripts.Script):
 		with gr.Group():
 			with gr.Accordion("Gelbooru Prompt", open=False):
 				fetch_tags = gr.Button(value='Get Tags', variant='primary')
-				#image = gr.Image(source="upload", type="file", label="Image with MD5 Hash")
-				image = gr.File(type="file", label="Image with MD5 Hash")
+				picurl = gr.Textbox(lines=2, placeholder="输入图片md5")
 				tags = gr.Textbox(value = "", label="Tags", lines=5)
 
-		fetch_tags.click(fn=fetch, inputs=[image], outputs=[tags])
-		return [image, tags, fetch_tags]
+		fetch_tags.click(fn=fetch, inputs=[picurl], outputs=[tags])
+		return [picurl, tags, fetch_tags]
 
 
 script_callbacks.on_ui_settings(on_ui_settings)
