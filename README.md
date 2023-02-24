@@ -1,3 +1,6 @@
+##I changed a part of the code, just copy the image link to get the tag on gelbooru##
+
+
 # Gelbooru Prompt
 Extension that gets tags for saved gelbooru images in AUTOMATIC1111's Stable Diffusion webui
 
