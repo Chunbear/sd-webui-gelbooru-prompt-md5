@@ -1,9 +1,9 @@
 ## I changed a part of the code, just copy the image link to get the tag on gelbooru ##
 You can use image links in the following formats：
 
-https://img3.gelbooru.com//samples/8f/d8/sample_8fd81ff8b57f9acd8fb8cf8785c1aa8f.jpg
-https://img3.gelbooru.com/images/8f/d8/8fd81ff8b57f9acd8fb8cf8785c1aa8f.jpg
-8fd81ff8b57f9acd8fb8cf8785c1aa8f
+> https://img3.gelbooru.com//samples/8f/d8/sample_8fd81ff8b57f9acd8fb8cf8785c1aa8f.jpg
+> https://img3.gelbooru.com/images/8f/d8/8fd81ff8b57f9acd8fb8cf8785c1aa8f.jpg
+> 8fd81ff8b57f9acd8fb8cf8785c1aa8f
 
 
 # Gelbooru Prompt
