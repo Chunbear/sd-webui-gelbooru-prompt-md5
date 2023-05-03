@@ -11,27 +11,39 @@ import bs4
 from bs4 import BeautifulSoup
 
 
+
+
 def on_ui_settings():
 	section = ('gelbooru-prompt', "Gelbooru Prompt")
 
-def fetch(picurl):
-	print("Ori: " + picurl)
-	hash = re.findall(r"([a-fA-F\d]{32})", picurl)[0]
-	print("hash: " + hash)
+def fetch(picurl,proxy):
+	print("输入: " + picurl)
+	proxies = {
+    "http://%(proxy)s/" % {'proxy': proxy},
+    "https://%(proxy)s/" % {'proxy': proxy}
+}
+	hash = re.findall(r"([a-fA-F\d]{32})", picurl)[0] #正则提取md5
+	print("提取hash: " + hash)
 
 	url = "https://gelbooru.com/index.php?page=post&s=list&tags=md5%3a" + hash
-	req = requests.get(url, 'html.parser')
+	#print(proxies)
+	req = requests.get(url, 'html.parser',proxies=proxies)
 	soup = BeautifulSoup(req.content , 'html.parser')
+	print("拼接url：",url)
 	found = None
-	for link in soup.find_all('a'):
-		link = link.get('href')
+
+	articles = soup.find_all("article", class_="thumbnail-preview") # 找到所有<article class="thumbnail-preview">标签
+	for article in articles: # 遍历每个标签
+		a = article.find("a") # 找到标签下的a标签
+		link = a.get("href") # 取出a标签的href值
+		print("link:",link)
 		if link.startswith("https://gelbooru.com/index.php?page=post"):
 			if not link.endswith("tags=all"):
 				found = link
 				break
 	if found is not None:
 		print("FOUND: " + found)
-		req = requests.get(found, 'html.parser') 
+		req = requests.get(found, 'html.parser',proxies=proxies) 
 		soup = BeautifulSoup(req.content , 'html.parser')
 		#tag_data = soup.find_all("textarea")
 		tag_data = soup.find_all("textarea", {"id": "tags"})
@@ -66,9 +78,10 @@ class BooruPromptsScript(scripts.Script):
 			with gr.Accordion("Gelbooru Prompt", open=False):
 				fetch_tags = gr.Button(value='Get Tags', variant='primary')
 				picurl = gr.Textbox(lines=2, placeholder="输入图片md5")
+				proxy = gr.Textbox(value = "",label="代理",lines=1,placeholder="格式为http://ip:port")
 				tags = gr.Textbox(value = "", label="Tags", lines=5)
 
-		fetch_tags.click(fn=fetch, inputs=[picurl], outputs=[tags])
+		fetch_tags.click(fn=fetch, inputs=[picurl,proxy], outputs=[tags])
 		return [picurl, tags, fetch_tags]
 
 
