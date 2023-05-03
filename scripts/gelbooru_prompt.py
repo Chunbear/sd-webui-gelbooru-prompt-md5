@@ -19,14 +19,14 @@ def on_ui_settings():
 def fetch(picurl,proxy):
 	print("输入: " + picurl)
 	proxies = {
-    "http://%(proxy)s/" % {'proxy': proxy},
-    "https://%(proxy)s/" % {'proxy': proxy}
+    "http": "%(proxy)s/" % {'proxy': proxy},
+    "https": "%(proxy)s/" % {'proxy': proxy}
 }
 	hash = re.findall(r"([a-fA-F\d]{32})", picurl)[0] #正则提取md5
 	print("提取hash: " + hash)
 
 	url = "https://gelbooru.com/index.php?page=post&s=list&tags=md5%3a" + hash
-	#print(proxies)
+	print(proxies)
 	req = requests.get(url, 'html.parser',proxies=proxies)
 	soup = BeautifulSoup(req.content , 'html.parser')
 	print("拼接url：",url)
